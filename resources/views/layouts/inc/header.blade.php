@@ -32,7 +32,7 @@ if (request()->segment(1) != 'countries') {
 <div class="header">
 	<nav class="navbar fixed-top navbar-site navbar-light bg-light navbar-expand-md" role="navigation">
 		<div class="container">
-			
+
 			<div class="navbar-identity">
 				{{-- Logo --}}
 				<a href="{{ url('/') }}" class="navbar-brand logo logo-title">
@@ -48,54 +48,9 @@ if (request()->segment(1) != 'countries') {
 						<path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"></path>
 					</svg>
 				</button>
-				{{-- Country Flag (Mobile) --}}
-				@if (request()->segment(1) != 'countries')
-					@if (isset($multiCountriesIsEnabled) and $multiCountriesIsEnabled)
-						@if (!empty(config('country.icode')))
-							@if (file_exists(public_path() . '/images/flags/24/' . config('country.icode') . '.png'))
-								<button class="flag-menu country-flag d-block d-md-none btn btn-secondary hidden pull-right" href="#selectCountry" data-toggle="modal">
-									<img src="{{ url('images/flags/24/' . config('country.icode') . '.png') . getPictureVersion() }}"
-										 alt="{{ config('country.name') }}"
-										 style="float: left;"
-									>
-									<span class="caret hidden-xs"></span>
-								</button>
-							@endif
-						@endif
-					@endif
-				@endif
 			</div>
-			
+
 			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-left">
-					{{-- Country Flag --}}
-					@if (request()->segment(1) != 'countries')
-						@if (config('settings.geo_location.country_flag_activation'))
-							@if (!empty(config('country.icode')))
-								@if (file_exists(public_path() . '/images/flags/32/' . config('country.icode') . '.png'))
-									<li class="flag-menu country-flag tooltipHere hidden-xs nav-item" data-toggle="tooltip" data-placement="{{ (config('lang.direction') == 'rtl') ? 'bottom' : 'right' }}" {!! $multiCountriesLabel !!}>
-										@if (isset($multiCountriesIsEnabled) and $multiCountriesIsEnabled)
-											<a href="#selectCountry" data-toggle="modal" class="nav-link">
-												<img class="flag-icon"
-													 src="{{ url('images/flags/32/' . config('country.icode') . '.png') . getPictureVersion() }}"
-													 alt="{{ config('country.name') }}"
-												>
-												<span class="caret hidden-sm"></span>
-											</a>
-										@else
-											<a style="cursor: default;">
-												<img class="flag-icon no-caret"
-													 src="{{ url('images/flags/32/' . config('country.icode') . '.png') . getPictureVersion() }}"
-													 alt="{{ config('country.name') }}"
-												>
-											</a>
-										@endif
-									</li>
-								@endif
-							@endif
-						@endif
-					@endif
-				</ul>
 				
 				<ul class="nav navbar-nav ml-auto navbar-right">
 					@if (!auth()->check())
@@ -157,11 +112,11 @@ if (request()->segment(1) != 'countries') {
 							</ul>
 						</li>
 					@endif
-					
+
 					@if (config('plugins.currencyexchange.installed'))
 						@include('currencyexchange::select-currency')
 					@endif
-					
+
 					@if (config('settings.single.pricing_page_enabled') == '2')
 						<li class="nav-item pricing">
 							<a href="{{ url('pricing') }}" class="nav-link">
@@ -169,7 +124,7 @@ if (request()->segment(1) != 'countries') {
 							</a>
 						</li>
 					@endif
-					
+
 					<?php
 						$addListingUrl = \App\Helpers\UrlGen::addPost();
 						$addListingAttr = '';
@@ -189,13 +144,13 @@ if (request()->segment(1) != 'countries') {
 							<i class="fa fa-plus-circle"></i> {{ t('Add Listing') }}
 						</a>
 					</li>
-					
+
 					@includeFirst([config('larapen.core.customizedViewPath') . 'layouts.inc.menu.select-language', 'layouts.inc.menu.select-language'])
-					
+
 				</ul>
 			</div>
-			
-			
+
+
 		</div>
 	</nav>
 </div>
