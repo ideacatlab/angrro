@@ -1,0 +1,27 @@
+<?php 
+
+return [
+    'failed' => 'Aceste acreditări nu se potrivesc cu înregistrările noastre.',
+    'throttle' => 'Prea multe încercări de autentificare.  Încercați din nou în : secunde secunde.',
+    'login' => 'Autentificare',
+    'register' => 'Inregistreaza-te',
+    'account_info' => 'Informatii cont',
+    'change_info' => 'Schimbați informațiile',
+    'change_password' => 'Schimbați parola',
+    'logout' => 'Deconectați-vă',
+    'remember_me' => 'Amintește-mi',
+    'information_updated' => 'Informațiile dvs. au fost actualizate.',
+    'name' => 'Nume',
+    'email' => 'Email',
+    'password' => 'Parola',
+    'confirm_password' => 'Confirma Parola',
+    'old_password' => 'Parola Veche',
+    'new_password' => 'Parola Noua',
+    'cancel' => 'Anulare',
+    'reset_password' => 'Reseteaza parola',
+    'send_password_reset_link' => 'Trimiteți linkul de resetare a parolei',
+    'forgot_password_question' => 'Ti-ai uitat parola?',
+    'wrong_password' => 'Vechea parolă introdusă este greșită.',
+    'password_updated' => 'Parola dvs. a fost schimbată.',
+    'registration_closed' => 'Înregistrarea este închisă.',
+];
