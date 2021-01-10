@@ -37,7 +37,7 @@ if (request()->segment(1) != 'countries') {
 				{{-- Logo --}}
 				<a href="{{ url('/') }}" class="navbar-brand logo logo-title">
 					<img src="{{ url ('images/logo/dummy.svg') }}"
-						 alt="angrro.ro" class="tooltipHere main-logo" title="" data-placement="bottom"
+						 alt="angrro.ro" class="tooltipHere main-logo ic_main_logo" title="" data-placement="bottom"
 						 data-toggle="tooltip"
 						 data-original-title="{!! isset($logoLabel) ? $logoLabel : '' !!}"/>
 				</a>
