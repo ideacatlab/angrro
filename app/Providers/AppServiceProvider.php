@@ -31,7 +31,7 @@ use Jenssegers\Date\Date;
 class AppServiceProvider extends ServiceProvider
 {
 	private $cacheExpiration = 86400; // Cache for 1 day (60 * 60 * 24)
-	
+
 	/**
 	 * Register any application services.
 	 *
@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
 	{
 		//
 	}
-	
+
 	/**
 	 * Bootstrap any application services.
 	 *
@@ -49,33 +49,38 @@ class AppServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
+
+		if($this->app->environment('production')) {
+    URL::forceScheme('https');
+		}
+
 		Paginator::useBootstrap();
-		
+
 		try {
 			// Specified key was too long error
 			Schema::defaultStringLength(191);
 		} catch (\Exception $e) {
 			//...
 		}
-		
+
 		// Create the local storage symbolic link
 		$this->checkAndCreateStorageSymlink();
-		
+
 		// Setup ACL system
 		$this->setupAclSystem();
-		
+
 		// Force HTTPS protocol
 		$this->forceHttps();
-		
+
 		// Create setting config var for the default language
 		$this->getDefaultLanguage();
-		
+
 		// Create config vars from settings table
 		$this->createConfigVars();
-		
+
 		// Update the config vars
 		$this->setConfigVars();
-		
+
 		// Date default encoding & translation
 		// The translation option is overwritten when applying the front-end settings
 		if (config('settings.app.date_force_utf8')) {
@@ -83,14 +88,14 @@ class AppServiceProvider extends ServiceProvider
 		}
 		appSetLocale(config('appLang.locale', 'en_US'));
 	}
-	
+
 	/**
 	 * Check the local storage symbolic link and Create it if does not exist.
 	 */
 	private function checkAndCreateStorageSymlink()
 	{
 		$symlink = public_path('storage');
-		
+
 		try {
 			if (!is_link($symlink)) {
 				// Symbolic links on windows are created by symlink() which accept only absolute paths.
@@ -103,7 +108,7 @@ class AppServiceProvider extends ServiceProvider
 			}
 		} catch (\Exception $e) {
 			$message = ($e->getMessage() != '') ? $e->getMessage() : 'Error with the PHP symlink() function';
-			
+
 			$docSymlink = 'http://support.bedigit.com/help-center/articles/71/images-dont-appear-in-my-website';
 			$docDirExists = 'https://support.bedigit.com/help-center/articles/1/10/80/symlink-file-exists-or-no-such-file-or-directory';
 			if (
@@ -112,13 +117,13 @@ class AppServiceProvider extends ServiceProvider
 			) {
 				$docSymlink = $docDirExists;
 			}
-			
+
 			$message = $message . ' - Please <a href="' . $docSymlink . '" target="_blank">see this article</a> for more information.';
-			
+
 			flash($message)->error();
 		}
 	}
-	
+
 	/**
 	 * Force HTTPS protocol
 	 */
@@ -128,7 +133,7 @@ class AppServiceProvider extends ServiceProvider
 			URL::forceScheme('https');
 		}
 	}
-	
+
 	/**
 	 * Create setting config var for the default language
 	 */
@@ -138,14 +143,14 @@ class AppServiceProvider extends ServiceProvider
 			// Get the DB default language
 			$defaultLang = Cache::remember('language.default', $this->cacheExpiration, function () {
 				$defaultLang = Language::where('default', 1)->first();
-				
+
 				return $defaultLang;
 			});
-			
+
 			if (!empty($defaultLang)) {
 				// Create DB default language settings
 				config()->set('appLang', $defaultLang->toArray());
-				
+
 				// Set dates default locale
 				appSetLocale(config('appLang.locale'));
 			} else {
@@ -155,7 +160,7 @@ class AppServiceProvider extends ServiceProvider
 			config()->set('appLang.abbr', config('app.locale'));
 		}
 	}
-	
+
 	/**
 	 * Create config vars from settings table
 	 */
@@ -165,16 +170,16 @@ class AppServiceProvider extends ServiceProvider
 		config()->set('settings.app.purchase_code', config('larapen.core.purchaseCode'));
 		config()->set('settings.app.default_date_format', config('larapen.core.defaultDateFormat'));
 		config()->set('settings.app.default_datetime_format', config('larapen.core.defaultDatetimeFormat'));
-		
+
 		// Check DB connection and catch it
 		try {
 			// Get all settings from the database
 			$settings = Cache::remember('settings.active', $this->cacheExpiration, function () {
 				$settings = Setting::where('active', 1)->get();
-				
+
 				return $settings;
 			});
-			
+
 			// Bind all settings to the Laravel config, so you can call them like
 			if ($settings->count() > 0) {
 				foreach ($settings as $setting) {
@@ -192,7 +197,7 @@ class AppServiceProvider extends ServiceProvider
 			config()->set('settings.app.logo', config('larapen.core.logo'));
 		}
 	}
-	
+
 	/**
 	 * Update the config vars
 	 */
@@ -200,7 +205,7 @@ class AppServiceProvider extends ServiceProvider
 	{
 		// Cache
 		$this->setCacheConfigVars();
-		
+
 		// App
 		config()->set('app.name', config('settings.app.app_name'));
 		config()->set('app.timezone', config('settings.app.default_timezone', config('app.timezone')));
@@ -258,7 +263,7 @@ class AppServiceProvider extends ServiceProvider
 		config()->set('meta-tags.twitter.site', config('settings.seo.twitter_username'));
 		// Cookie Consent
 		config()->set('cookie-consent.enabled', env('COOKIE_CONSENT_ENABLED', config('settings.other.cookie_consent_enabled')));
-		
+
 		// Admin panel
 		config()->set('larapen.admin.skin', config('settings.style.admin_skin'));
 		config()->set('larapen.admin.default_date_format', config('settings.app.default_date_format'));
@@ -268,11 +273,11 @@ class AppServiceProvider extends ServiceProvider
 		} else {
 			config()->set('larapen.admin.show_powered_by', config('settings.footer.show_powered_by'));
 		}
-		
+
 		// Backup Disks Setup
 		StorageDisk::setBackupDisks();
 	}
-	
+
 	/**
 	 * Update the Cache config vars
 	 */
@@ -324,7 +329,7 @@ class AppServiceProvider extends ServiceProvider
 			config()->set('settings.optimization.cache_expiration', '-1');
 		}
 	}
-	
+
 	/**
 	 * Setup ACL system
 	 * Check & Migrate Old admin authentication to ACL system

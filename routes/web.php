@@ -14,9 +14,6 @@ use Illuminate\Support\Str;
 |
 */
 
-if (env('APP_ENV') === 'production') {
-    URL::forceSchema('https');
-}
 
 /*
 |--------------------------------------------------------------------------
