@@ -36,7 +36,7 @@ if (request()->segment(1) != 'countries') {
 			<div class="navbar-identity">
 				{{-- Logo --}}
 				<a href="{{ url('/') }}" class="navbar-brand logo logo-title">
-					<img src="{{ imgUrl(config('settings.app.logo'), 'logo') }}"
+					<img src="{{ url(config('settings.app.logo'), 'logo') }}"
 						 alt="{{ strtolower(config('settings.app.app_name')) }}" class="tooltipHere main-logo" title="" data-placement="bottom"
 						 data-toggle="tooltip"
 						 data-original-title="{!! isset($logoLabel) ? $logoLabel : '' !!}"/>
@@ -51,7 +51,7 @@ if (request()->segment(1) != 'countries') {
 			</div>
 
 			<div class="navbar-collapse collapse">
-				
+
 				<ul class="nav navbar-nav ml-auto navbar-right">
 					@if (!auth()->check())
 						<li class="nav-item">
