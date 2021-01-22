@@ -111,7 +111,7 @@ if (isset($searchFormOptions, $searchFormOptions['hide_on_mobile']) and $searchF
 								<div class="row m-0">
 									<div class="col-md-5 col-sm-12 mb-1 mb-xl-0 mb-lg-0 mb-md-0 search-col relative">
 										<i class="icon-docs icon-append"></i>
-										<input type="text" name="q" class="form-control keyword has-icon" placeholder="{{ t('what') }}" value="">
+										<input type="text" name="q" class="form-control keyword has-icon" placeholder="Cauta produsul dorit" value="">
 									</div>
 
 									<div class="col-md-5 col-sm-12 search-col relative locationicon">
@@ -157,7 +157,7 @@ if (isset($searchFormOptions, $searchFormOptions['hide_on_mobile']) and $searchF
 								<div class="row m-0">
 									<div class="col-md-5 col-sm-12 mb-1 mb-xl-0 mb-lg-0 mb-md-0 search-col relative">
 										<i class="icon-docs icon-append"></i>
-										<input type="text" name="q" class="form-control keyword has-icon" placeholder="{{ t('what') }}" value="">
+										<input type="text" name="q" class="form-control keyword has-icon" placeholder="Cauta produsul dorit" value="">
 									</div>
 
 									<div class="col-md-5 col-sm-12 search-col relative locationicon">
@@ -165,12 +165,12 @@ if (isset($searchFormOptions, $searchFormOptions['hide_on_mobile']) and $searchF
 										<input type="hidden" id="lSearch" name="l" value="">
 										@if ($showMap)
 											<input type="text" id="locSearch" name="location" class="form-control locinput input-rel searchtag-input has-icon tooltipHere"
-												   placeholder="{{ t('where') }}" value="" title="" data-placement="bottom"
+												   placeholder="Locatie (Optional)" value="" title="" data-placement="bottom"
 												   data-toggle="tooltip" type="button"
 												   data-original-title="{{ t('Enter a city name OR a state name with the prefix', ['prefix' => t('area')]) . t('State Name') }}">
 										@else
 											<input type="text" id="locSearch" name="location" class="form-control locinput input-rel searchtag-input has-icon"
-												   placeholder="{{ t('where') }}" value="">
+												   placeholder="Locatie (Optional)" value="">
 										@endif
 									</div>
 
